@@ -1,3 +1,6 @@
+using System.Text.RegularExpressions;
+using static System.Windows.Forms.LinkLabel;
+
 namespace VBoxVM
 {
     public partial class Main : Form
@@ -28,6 +31,8 @@ namespace VBoxVM
             string xmlFile = $@"{this.xmlFolder}\VirtualBox.xml";
             string xmlFileBck = $@"{this.xmlFolder}\VirtualBox_bck.xml";
             string newLocation = this.txt_folder_path.Text;
+            string fileText;
+            string tmpText = "";
 
             // Verify if text box is not empty
             if (newLocation == "")
@@ -36,7 +41,7 @@ namespace VBoxVM
                 return;
             }
 
-            // Copy file
+            // File copy
             try 
             {
                 File.Copy(xmlFile, xmlFileBck);
@@ -44,6 +49,24 @@ namespace VBoxVM
             catch (IOException ioex)
             {
                 MessageBox.Show(ioex.Message, "Error copying VirtualBox xml file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            fileText = File.ReadAllText(xmlFile);
+            // TO DO: Find out which vm are available inside the path provided. What matters is the ova file itself
+            foreach (string x in fileText.Split('\n'))
+            {
+                if (x.Contains("<MachineRegistry>"))
+                {
+                    tmpText += "\t<MachineRegistry>\n\t\t<teste>\n\t</MachineRegistry>\n";
+                }
+                else if (x.Contains("</MachineRegistry>") || x.Contains("<MachineEntry"))
+                {
+                    continue;
+                }
+                else
+                {
+                    tmpText += x + "\n";
+                }
             }
         }
     }
