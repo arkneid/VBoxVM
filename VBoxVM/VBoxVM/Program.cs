@@ -10,8 +10,18 @@ namespace VBoxVM
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
-            Application.Run(new Main());
+            string xmlFile = $@"C:\Users\{Environment.UserName}\.VirtualBox\VirtualBox_bck.xml";
+
+            if (!File.Exists(xmlFile))
+            {
+                ApplicationConfiguration.Initialize();
+                Application.Run(new Main());
+            }
+            else
+            {
+                ApplicationConfiguration.Initialize();
+                Application.Run(new Restore());
+            }
         }
     }
 }

@@ -94,7 +94,16 @@ namespace VBoxVM
                     tmpText += x + "\n";
                 }
             }
-            File.WriteAllText(xmlFile, tmpText);
+            try
+            {
+                File.WriteAllText(xmlFile, tmpText);
+                MessageBox.Show("VirtualBox xml was successfully changed!", "Writing VirtualBox xml file", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (IOException ioex)
+            {
+                MessageBox.Show(ioex.Message, "Error Writing VirtualBox xml file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            this.Close();
         }
     }
 }
