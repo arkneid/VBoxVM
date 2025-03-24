@@ -33,6 +33,11 @@ namespace VBoxVM
             string newLocation = this.txt_folder_path.Text;
             string fileText;
             string tmpText = "";
+            string vboxName = "";
+            string vboxPath = "";
+            string vboxFileContent;
+            List<string> vboxMachineUuid = new List<string>();
+            DirectoryInfo newDirInfo;
 
             // Verify if text box is not empty
             if (newLocation == "")
@@ -51,13 +56,34 @@ namespace VBoxVM
                 MessageBox.Show(ioex.Message, "Error copying VirtualBox xml file", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            // Write file with new information
             fileText = File.ReadAllText(xmlFile);
-            // TO DO: Find out which vm are available inside the path provided. What matters is the ova file itself
+            newDirInfo = new DirectoryInfo(newLocation);
+
+            foreach (DirectoryInfo directory in newDirInfo.GetDirectories())
+            {
+                vboxName = $"{directory.Name}.vbox";
+                vboxPath = $@"{newLocation}\{directory.Name}";
+
+                foreach (var line in File.ReadAllLines($@"{vboxPath}\{vboxName}"))
+                {
+                    if (line.Contains("<Machine"))
+                    {
+                        vboxMachineUuid.Add(line.Substring(line.IndexOf("{"), 38));
+                    }
+                }
+            }
             foreach (string x in fileText.Split('\n'))
             {
                 if (x.Contains("<MachineRegistry>"))
                 {
-                    tmpText += "\t<MachineRegistry>\n\t\t<teste>\n\t</MachineRegistry>\n";
+                    foreach (string uuid in vboxMachineUuid)
+                    {
+                        tmpText += "\t<MachineRegistry>";
+                        tmpText += $"\n\t  <MachineEntry uuid=\"{uuid}\" src=\"{vboxPath}\\{vboxName}\"/>";
+                        tmpText += "\n\t</MachineRegistry>\n";
+                    }
                 }
                 else if (x.Contains("</MachineRegistry>") || x.Contains("<MachineEntry"))
                 {
@@ -68,6 +94,7 @@ namespace VBoxVM
                     tmpText += x + "\n";
                 }
             }
+            File.WriteAllText(xmlFile, tmpText);
         }
     }
 }
