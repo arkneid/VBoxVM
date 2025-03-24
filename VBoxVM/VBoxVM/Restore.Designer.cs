@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             main_label = new Label();
+            btn_restore = new Button();
             SuspendLayout();
             // 
             // main_label
@@ -42,11 +43,22 @@
             main_label.Text = "\r\nVBox default folder";
             main_label.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // btn_restore
+            // 
+            btn_restore.Location = new Point(260, 68);
+            btn_restore.Name = "btn_restore";
+            btn_restore.Size = new Size(165, 49);
+            btn_restore.TabIndex = 6;
+            btn_restore.Text = "Restore Old Config";
+            btn_restore.UseVisualStyleBackColor = true;
+            btn_restore.Click += btn_restore_Click;
+            // 
             // Restore
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(687, 201);
+            ClientSize = new Size(687, 132);
+            Controls.Add(btn_restore);
             Controls.Add(main_label);
             Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.Fixed3D;
@@ -59,5 +71,6 @@
         #endregion
 
         private Label main_label;
+        private Button btn_restore;
     }
 }

@@ -16,5 +16,10 @@ namespace VBoxVM
         {
             InitializeComponent();
         }
+
+        private void btn_restore_Click(object sender, EventArgs e)
+        {
+            //TODO
+        }
     }
 }
