@@ -32,6 +32,34 @@ namespace VBoxVM
 
             File.Delete(xmlFile);
             File.Move(xmlFileBck, xmlFile);
+            //MinimizeWindow();
+        }
+
+        private void onResizeRestore(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)  // only hide if minimizing the form
+            {
+                this.ShowInTaskbar = false;
+                ntfIconRestore.Visible = true;
+                this.Visible = false;
+            }
+        }
+
+        private void notifyIconRestore_MouseClick(object sender, MouseEventArgs e)
+        {
+            this.ShowInTaskbar = true;
+            this.Visible = true;
+
+            this.WindowState = FormWindowState.Normal;
+        }
+
+        private void MinimizeWindow()
+        {
+            this.ShowInTaskbar = false;
+            ntfIconRestore.Visible = true;
+            this.Visible = false;
+
+            WindowState = FormWindowState.Minimized;
         }
     }
 }

@@ -28,8 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Restore));
             main_label = new Label();
             btn_restore = new Button();
+            ntfIconRestore = new NotifyIcon(components);
             SuspendLayout();
             // 
             // main_label
@@ -53,6 +56,13 @@
             btn_restore.UseVisualStyleBackColor = true;
             btn_restore.Click += btn_restore_Click;
             // 
+            // ntfIconRestore
+            // 
+            ntfIconRestore.Icon = (Icon)resources.GetObject("ntfIconRestore.Icon");
+            ntfIconRestore.Text = "VBoxVM";
+            ntfIconRestore.Visible = true;
+            ntfIconRestore.MouseClick += notifyIconRestore_MouseClick;
+            // 
             // Restore
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -62,11 +72,13 @@
             Controls.Add(main_label);
             Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.Fixed3D;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             Name = "Restore";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Restore";
+            Resize += onResizeRestore;
             ResumeLayout(false);
         }
 
@@ -74,5 +86,6 @@
 
         private Label main_label;
         private Button btn_restore;
+        private NotifyIcon ntfIconRestore;
     }
 }
