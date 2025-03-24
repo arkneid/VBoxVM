@@ -28,11 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             label1 = new Label();
             txt_folder_path = new TextBox();
             btn_choose_folder = new Button();
             btn_change = new Button();
             main_label = new Label();
+            ntfIconMain = new NotifyIcon(components);
             SuspendLayout();
             // 
             // label1
@@ -87,6 +90,13 @@
             main_label.Text = "\r\nVBox default folder";
             main_label.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // ntfIconMain
+            // 
+            ntfIconMain.Icon = (Icon)resources.GetObject("ntfIconMain.Icon");
+            ntfIconMain.Text = "VBoxVM";
+            ntfIconMain.Visible = true;
+            ntfIconMain.MouseClick += notifyIcon_MouseClick;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -100,11 +110,13 @@
             Controls.Add(label1);
             Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.Fixed3D;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             Name = "Main";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Main";
+            Resize += onResizeMain;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -116,5 +128,6 @@
         private Button btn_choose_folder;
         private Button btn_change;
         private Label main_label;
+        private NotifyIcon ntfIconMain;
     }
 }

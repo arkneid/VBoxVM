@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 using static System.Windows.Forms.LinkLabel;
 
 namespace VBoxVM
@@ -47,7 +48,7 @@ namespace VBoxVM
             }
 
             // File copy
-            try 
+            try
             {
                 File.Copy(xmlFile, xmlFileBck);
             }
@@ -104,6 +105,24 @@ namespace VBoxVM
                 MessageBox.Show(ioex.Message, "Error Writing VirtualBox xml file", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             this.Close();
+        }
+
+        private void onResizeMain(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)  // only hide if minimizing the form
+            {
+                this.ShowInTaskbar = false;
+                ntfIconMain.Visible = true;
+                this.Visible = false;
+            }
+        }
+
+        private void notifyIcon_MouseClick(object sender, MouseEventArgs e)
+        {
+            this.ShowInTaskbar = true;
+            this.Visible = true;
+
+            WindowState = FormWindowState.Normal;
         }
     }
 }
