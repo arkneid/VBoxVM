@@ -55,10 +55,27 @@ namespace VBoxVM
 
         private void notifyIconRestore_MouseClick(object sender, MouseEventArgs e)
         {
-            this.ShowInTaskbar = true;
-            this.Visible = true;
+            string xmlFile = $@"{this.xmlFolder}\VirtualBox_bck.xml";
 
-            this.WindowState = FormWindowState.Normal;
+            if (!File.Exists(xmlFile))
+            {
+                Main winMain = new Main();
+                ntfIconRestore.Visible = false;
+                this.Hide();
+                winMain.Show();
+            }
+            else
+            {
+                this.ShowInTaskbar = true;
+                this.Visible = true;
+
+                WindowState = FormWindowState.Normal;
+            }
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }
