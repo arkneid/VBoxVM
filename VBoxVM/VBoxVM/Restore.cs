@@ -30,9 +30,17 @@ namespace VBoxVM
                 return;
             }
 
-            File.Delete(xmlFile);
-            File.Move(xmlFileBck, xmlFile);
-            //MinimizeWindow();
+            try
+            {
+                File.Delete(xmlFile);
+                File.Move(xmlFileBck, xmlFile);
+                MessageBox.Show("The backup of virtual box config file was restored.", "Restore Virtual Box config file", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.WindowState = FormWindowState.Minimized;
+            }
+            catch (IOException ioex)
+            {
+                MessageBox.Show(ioex.Message, "Error Writing VirtualBox xml file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void onResizeRestore(object sender, EventArgs e)
@@ -51,15 +59,6 @@ namespace VBoxVM
             this.Visible = true;
 
             this.WindowState = FormWindowState.Normal;
-        }
-
-        private void MinimizeWindow()
-        {
-            this.ShowInTaskbar = false;
-            ntfIconRestore.Visible = true;
-            this.Visible = false;
-
-            WindowState = FormWindowState.Minimized;
         }
     }
 }

@@ -99,12 +99,12 @@ namespace VBoxVM
             {
                 File.WriteAllText(xmlFile, tmpText);
                 MessageBox.Show("VirtualBox xml was successfully changed!", "Writing VirtualBox xml file", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.WindowState = FormWindowState.Minimized;
             }
             catch (IOException ioex)
             {
                 MessageBox.Show(ioex.Message, "Error Writing VirtualBox xml file", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            this.Close();
         }
 
         private void onResizeMain(object sender, EventArgs e)
