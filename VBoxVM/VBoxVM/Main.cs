@@ -12,6 +12,7 @@ namespace VBoxVM
             InitializeComponent();
             this.txt_folder_path.ReadOnly = true;
             this.xmlFolder = $@"C:\Users\{Environment.UserName}\.VirtualBox";
+            this.ntfIconMain.Visible = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -119,10 +120,27 @@ namespace VBoxVM
 
         private void notifyIcon_MouseClick(object sender, MouseEventArgs e)
         {
-            this.ShowInTaskbar = true;
-            this.Visible = true;
+            string xmlFile = $@"{this.xmlFolder}\VirtualBox_bck.xml";
 
-            WindowState = FormWindowState.Normal;
+            if (File.Exists(xmlFile))
+            {
+                Restore winRestore = new Restore();
+                ntfIconMain.Visible = false;
+                this.Hide();
+                winRestore.Show();
+            }
+            else
+            {
+                this.ShowInTaskbar = true;
+                this.Visible = true;
+
+                WindowState = FormWindowState.Normal;
+            }
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }
