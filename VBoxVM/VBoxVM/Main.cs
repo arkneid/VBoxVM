@@ -72,20 +72,24 @@ namespace VBoxVM
                 {
                     if (line.Contains("<Machine"))
                     {
-                        vboxMachineUuid.Add(line.Substring(line.IndexOf("{"), 38));
+                        vboxMachineUuid.Add($@"{vboxPath}\{vboxName}" + " - " + line.Substring(line.IndexOf("{"), 38));
                     }
                 }
             }
             foreach (string x in fileText.Split('\n'))
             {
-                if (x.Contains("<MachineRegistry>"))
+                if (x.Contains("<MachineRegistry"))
                 {
+                    tmpText += "\t<MachineRegistry>";
                     foreach (string uuid in vboxMachineUuid)
                     {
-                        tmpText += "\t<MachineRegistry>";
-                        tmpText += $"\n\t  <MachineEntry uuid=\"{uuid}\" src=\"{vboxPath}\\{vboxName}\"/>";
-                        tmpText += "\n\t</MachineRegistry>\n";
+                        tmpText += $"\n\t  <MachineEntry uuid=\"{uuid.Split(" - ")[1]}\" src=\"{uuid.Split(" - ")[0]}\"/>";
                     }
+                    tmpText += "\n\t</MachineRegistry>\n";
+                }
+                else if (x.Contains("<SystemProperties"))
+                {
+                    tmpText += $"\t<SystemProperties defaultMachineFolder=\"{newLocation}\" defaultHardDiskFormat=\"VDI\" VRDEAuthLibrary=\"VBoxAuth\" webServiceAuthLibrary=\"VBoxAuth\" LogHistoryCount=\"3\" proxyMode=\"0\" exclusiveHwVirt=\"false\"/>";
                 }
                 else if (x.Contains("</MachineRegistry>") || x.Contains("<MachineEntry"))
                 {
