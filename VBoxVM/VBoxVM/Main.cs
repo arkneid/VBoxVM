@@ -180,5 +180,13 @@ namespace VBoxVM
         {
             Environment.Exit(0);
         }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            About WindowAbout = new About();
+
+            this.Hide();
+            WindowAbout.Show();
+        }
     }
 }

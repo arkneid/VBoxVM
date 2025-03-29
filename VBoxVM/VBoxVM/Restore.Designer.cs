@@ -77,7 +77,7 @@
             MaximizeBox = false;
             Name = "Restore";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Restore";
+            Text = "VBoxVM";
             Resize += onResizeRestore;
             ResumeLayout(false);
         }
