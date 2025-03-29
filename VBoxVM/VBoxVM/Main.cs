@@ -41,6 +41,9 @@ namespace VBoxVM
             List<string> vboxMachineUuid = new List<string>();
             DirectoryInfo newDirInfo;
 
+            // Verify if folder and file exists
+            this.CheckFolderFile(VmFolder: this.xmlFolder, VmFile: xmlFile);
+
             // Verify if text box is not empty
             if (newLocation == "")
             {
@@ -109,6 +112,30 @@ namespace VBoxVM
             catch (IOException ioex)
             {
                 MessageBox.Show(ioex.Message, "Error Writing VirtualBox xml file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void CheckFolderFile(string VmFolder, string VmFile)
+        {
+            if (Directory.Exists(VmFolder))
+            {
+                if (!File.Exists(VmFile))
+                {
+                    File.Create(VmFile);
+                }
+            }
+            else
+            {
+                try
+                {
+                    Directory.CreateDirectory(VmFolder);
+                    File.Create(VmFile);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error found while trying to create file or directory:\n{ex}", "Creation of .VirtualBox fodler and VirtualBox.xml file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
         }
 
