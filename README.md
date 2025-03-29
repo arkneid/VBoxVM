@@ -2,7 +2,7 @@
 A tool to change the default location of VirtualBox VM's
 
 # Development
-To develop for this application you need to fork this repostiory and create a branch from dev (where all the devs are tested), do your development and then create a pull-request to the dev branch.
+To develop for this application you need to fork this repostiory and create a branch from main branch, do your development and then create a pull request to the dev branch.
 The PR will be reviewed and merged if it is ok.
 
 # App publication
