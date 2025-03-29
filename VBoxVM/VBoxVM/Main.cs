@@ -71,12 +71,19 @@ namespace VBoxVM
                 vboxName = $"{directory.Name}.vbox";
                 vboxPath = $@"{newLocation}\{directory.Name}";
 
-                foreach (var line in File.ReadAllLines($@"{vboxPath}\{vboxName}"))
+                if (File.Exists($@"{vboxPath}\{vboxName}"))
                 {
-                    if (line.Contains("<Machine"))
+                    foreach (var line in File.ReadAllLines($@"{vboxPath}\{vboxName}"))
                     {
-                        vboxMachineUuid.Add($@"{vboxPath}\{vboxName}" + " - " + line.Substring(line.IndexOf("{"), 38));
+                        if (line.Contains("<Machine"))
+                        {
+                            vboxMachineUuid.Add($@"{vboxPath}\{vboxName}" + " - " + line.Substring(line.IndexOf("{"), 38));
+                        }
                     }
+                }
+                else
+                {
+                    MessageBox.Show($"The .vbox file for the virtual machine {directory.Name} don't exist.\nThis usually means that the virtual machine was removed but not all files were deleted OR the virtual machine is corrupted!", "Check vbox file", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             foreach (string x in fileText.Split('\n'))
