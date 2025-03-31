@@ -1,6 +1,6 @@
 ﻿namespace VBoxVM
 {
-    partial class Main
+    partial class MainView
     {
         /// <summary>
         ///  Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainView));
             label1 = new Label();
             txt_folder_path = new TextBox();
             btn_choose_folder = new Button();
@@ -121,11 +121,11 @@
             // aboutToolStripMenuItem
             // 
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new Size(180, 22);
+            aboutToolStripMenuItem.Size = new Size(107, 22);
             aboutToolStripMenuItem.Text = "About";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
-            // Main
+            // MainView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -143,7 +143,7 @@
             MainMenuStrip = MainMenu;
             Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
-            Name = "Main";
+            Name = "MainView";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "VBoxVM";
             Resize += onResizeMain;

@@ -1,6 +1,6 @@
 ﻿namespace VBoxVM
 {
-    partial class About
+    partial class AboutView
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(About));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutView));
             LblAbout = new Label();
             LinkLblGetHelp = new LinkLabel();
             LinkLabelHome = new LinkLabel();
@@ -41,7 +41,7 @@
             LblAbout.Name = "LblAbout";
             LblAbout.Size = new Size(179, 100);
             LblAbout.TabIndex = 0;
-            LblAbout.Text = "Author: Arkneid\r\nVersion: v2.0\r\nRelease Date: 30/03/2024\r\nHome:\r\nGet Help:";
+            LblAbout.Text = "Author: Arkneid\r\nVersion: v2.0\r\nRelease Date: 31/03/2024\r\nHome:\r\nGet Help:";
             // 
             // LinkLblGetHelp
             // 

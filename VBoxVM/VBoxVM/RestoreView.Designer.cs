@@ -1,6 +1,6 @@
 ﻿namespace VBoxVM
 {
-    partial class Restore
+    partial class RestoreView
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Restore));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RestoreView));
             main_label = new Label();
             btn_restore = new Button();
             ntfIconRestore = new NotifyIcon(components);

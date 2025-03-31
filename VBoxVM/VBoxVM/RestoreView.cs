@@ -10,10 +10,12 @@ using System.Windows.Forms;
 
 namespace VBoxVM
 {
-    public partial class Restore : Form
+    public partial class RestoreView : Form, IRestoreView
     {
         private string xmlFolder;
-        public Restore()
+        public event EventHandler? RestoreClickEvent;
+
+        public RestoreView()
         {
             InitializeComponent();
             this.xmlFolder = $@"C:\Users\{Environment.UserName}\.VirtualBox";
@@ -21,28 +23,16 @@ namespace VBoxVM
 
         private void btn_restore_Click(object sender, EventArgs e)
         {
-            string xmlFile = $@"{this.xmlFolder}\VirtualBox.xml";
-            string xmlFileBck = $@"{this.xmlFolder}\VirtualBox_bck.xml";
-            Main WindowMain = new Main();
-
-            if (!File.Exists(xmlFileBck))
-            {
-                MessageBox.Show("The backup file don't exists!", "Backup File Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
+            MainView MainWindow = new MainView();
             try
             {
-                File.Delete(xmlFile);
-                File.Move(xmlFileBck, xmlFile);
-                MessageBox.Show("The backup of virtual box config file was restored.", "Restore Virtual Box config file", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                RestoreClickEvent?.Invoke(this, EventArgs.Empty);
                 this.Hide();
-                WindowMain.Show();
-
+                MainWindow.Show();
             }
-            catch (IOException ioex)
+            catch 
             {
-                MessageBox.Show(ioex.Message, "Error Writing VirtualBox xml file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
         }
 
@@ -53,6 +43,10 @@ namespace VBoxVM
                 this.ShowInTaskbar = false;
                 ntfIconRestore.Visible = true;
                 this.Visible = false;
+                this.ntfIconRestore.BalloonTipText = "VBoxVM App Minimized";
+                this.ntfIconRestore.BalloonTipTitle = "VBoxVM";
+                this.ntfIconRestore.BalloonTipIcon = ToolTipIcon.Info;
+                this.ntfIconRestore.ShowBalloonTip(5000);
             }
         }
 
@@ -62,7 +56,7 @@ namespace VBoxVM
 
             if (!File.Exists(xmlFile))
             {
-                Main winMain = new Main();
+                MainView winMain = new MainView();
                 ntfIconRestore.Visible = false;
                 this.Hide();
                 winMain.Show();

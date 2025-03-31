@@ -11,16 +11,16 @@ using System.Windows.Forms;
 
 namespace VBoxVM
 {
-    public partial class About : Form
+    public partial class AboutView : Form
     {
-        public About()
+        public AboutView()
         {
             InitializeComponent();
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            Main WindowMain = new Main();
+            MainView WindowMain = new MainView();
 
             this.Hide();
             WindowMain.Show();
