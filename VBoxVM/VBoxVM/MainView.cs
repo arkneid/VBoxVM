@@ -1,12 +1,15 @@
 using System.Windows.Forms;
+using static System.Windows.Forms.DataFormats;
 
 namespace VBoxVM
 {
     public partial class MainView : Form, IMainView
     {
         private string xmlFolder;
-        public string FolderPath => txt_folder_path.Text;
+        public string FolderPath { get => this.txt_folder_path.Text; }
+
         public event EventHandler? ChangeClickEvent;
+        private MainController _controller;
 
         public MainView()
         {
@@ -14,6 +17,7 @@ namespace VBoxVM
             this.txt_folder_path.ReadOnly = true;
             this.xmlFolder = $@"C:\Users\{Environment.UserName}\.VirtualBox";
             this.ntfIconMain.Visible = false;
+            this._controller = new MainController(this);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -32,6 +36,7 @@ namespace VBoxVM
         private void btn_change_Click(object sender, EventArgs e)
         {
             ChangeClickEvent?.Invoke(this, e);
+            this.txt_folder_path.Text = string.Empty;
             WindowState = FormWindowState.Minimized;
         }
 
@@ -40,12 +45,18 @@ namespace VBoxVM
             if (WindowState == FormWindowState.Minimized)  // only hide if minimizing the form
             {
                 this.ShowInTaskbar = false;
-                ntfIconMain.Visible = true;
+                this.ntfIconMain.Visible = true;
                 this.Visible = false;
                 this.ntfIconMain.BalloonTipText = "VBoxVM App Minimized";
                 this.ntfIconMain.BalloonTipTitle = "VBoxVM";
                 this.ntfIconMain.BalloonTipIcon = ToolTipIcon.Info;
-                this.ntfIconMain.ShowBalloonTip(5000);
+                this.ntfIconMain.ShowBalloonTip(3000);
+            }
+            else
+            {
+                this.ShowInTaskbar = true;
+                this.ntfIconMain.Visible = false;
+                this.Visible = true;
             }
         }
 
@@ -55,11 +66,17 @@ namespace VBoxVM
 
             if (File.Exists(xmlFile))
             {
-                System.Diagnostics.Process.Start(Application.ExecutablePath); // to start new instance of application
-                this.Close();
+                RestoreView? restoreView = new RestoreView();
+                this.Hide();
+                restoreView.ShowDialog();
+                restoreView = null;
+                this.Show();
+                this.ntfIconMain.Visible = false;
+                WindowState = FormWindowState.Normal;
             }
             else
             {
+                this.ntfIconMain.Visible = false;
                 this.ShowInTaskbar = true;
                 this.Visible = true;
 
@@ -69,7 +86,10 @@ namespace VBoxVM
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            Environment.Exit(0);
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                Environment.Exit(0);
+            }
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)

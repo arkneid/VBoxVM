@@ -15,16 +15,12 @@ namespace VBoxVM
             if (!File.Exists(xmlFile))
             {
                 ApplicationConfiguration.Initialize();
-                MainView view = new MainView();
-                MainController controller = new MainController(view);
-                Application.Run(view);
+                Application.Run(new MainView());
             }
             else
             {
                 ApplicationConfiguration.Initialize();
-                RestoreView view = new RestoreView();
-                RestoreController controller = new RestoreController(view);
-                Application.Run(view);
+                Application.Run(new RestoreView());
             }
         }
     }

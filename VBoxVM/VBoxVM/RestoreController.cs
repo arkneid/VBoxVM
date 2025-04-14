@@ -27,7 +27,6 @@ namespace VBoxVM
         {
             string xmlFile = $@"{this.xmlFolder}\VirtualBox.xml";
             string xmlFileBck = $@"{this.xmlFolder}\VirtualBox_bck.xml";
-            MainView WindowMain = new MainView();
 
             if (!File.Exists(xmlFileBck))
             {
@@ -40,7 +39,6 @@ namespace VBoxVM
                 File.Delete(xmlFile);
                 File.Move(xmlFileBck, xmlFile);
                 MessageBox.Show("The backup of virtual box config file was restored.", "Restore Virtual Box config file", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                WindowMain.Show();
 
             }
             catch (IOException ioex)

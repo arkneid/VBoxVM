@@ -14,11 +14,14 @@ namespace VBoxVM
     {
         private string xmlFolder;
         public event EventHandler? RestoreClickEvent;
+        private RestoreController _controller;
 
         public RestoreView()
         {
             InitializeComponent();
             this.xmlFolder = $@"C:\Users\{Environment.UserName}\.VirtualBox";
+            this._controller = new RestoreController(this);
+            this.ntfIconRestore.Visible = false;
         }
 
         private void btn_restore_Click(object sender, EventArgs e)
@@ -27,10 +30,9 @@ namespace VBoxVM
             try
             {
                 RestoreClickEvent?.Invoke(this, EventArgs.Empty);
-                this.Hide();
-                MainWindow.Show();
+                this.Close();
             }
-            catch 
+            catch
             {
                 return;
             }
@@ -41,12 +43,12 @@ namespace VBoxVM
             if (WindowState == FormWindowState.Minimized)  // only hide if minimizing the form
             {
                 this.ShowInTaskbar = false;
-                ntfIconRestore.Visible = true;
+                this.ntfIconRestore.Visible = true;
                 this.Visible = false;
                 this.ntfIconRestore.BalloonTipText = "VBoxVM App Minimized";
                 this.ntfIconRestore.BalloonTipTitle = "VBoxVM";
                 this.ntfIconRestore.BalloonTipIcon = ToolTipIcon.Info;
-                this.ntfIconRestore.ShowBalloonTip(5000);
+                this.ntfIconRestore.ShowBalloonTip(3000);
             }
         }
 
@@ -57,7 +59,6 @@ namespace VBoxVM
             if (!File.Exists(xmlFile))
             {
                 MainView winMain = new MainView();
-                ntfIconRestore.Visible = false;
                 this.Hide();
                 winMain.Show();
             }
@@ -68,11 +69,6 @@ namespace VBoxVM
 
                 WindowState = FormWindowState.Normal;
             }
-        }
-
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            Environment.Exit(0);
         }
     }
 }
