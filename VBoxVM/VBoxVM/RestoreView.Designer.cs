@@ -63,7 +63,7 @@
             ntfIconRestore.Visible = true;
             ntfIconRestore.MouseClick += notifyIconRestore_MouseClick;
             // 
-            // Restore
+            // RestoreView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -75,7 +75,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
-            Name = "Restore";
+            Name = "RestoreView";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "VBoxVM";
             Resize += onResizeRestore;
